@@ -7,10 +7,10 @@ class CompanyBase(BaseModel):
     email: str
     phone: str
     
-class CompanyCreate(BaseModel):
+class CompanyCreate(CompanyBase):
     pass
 
-class CompanyUpdate(BaseModel):
+class CompanyUpdate(CompanyBase):
     name:Optional[str] = None
     email:Optional[str] = None
     phone:Optional[str] = None
