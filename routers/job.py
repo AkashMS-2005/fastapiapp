@@ -13,7 +13,7 @@ router = APIRouter(
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=JobResponse)
 def create_job(job: JobCreate, db: Session = Depends(get_db)):
-    db_job = Job(**job.model_dump())   # use job.dict() if using Pydantic v1
+    db_job = Job(**job.dict())
     db.add(db_job)
     db.commit()
     db.refresh(db_job)
