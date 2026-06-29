@@ -8,10 +8,10 @@ class JobBase(BaseModel):
     description: Optional[str] = None
     company_id: int
 
-class JobCreate(BaseModel):
+class JobCreate(JobBase):
     pass
 
-class JobUpdate(BaseModel):
+class JobUpdate(JobBase):
     title: Optional[str] = None
     salary: Optional[int] = None
     description: Optional[str] = None

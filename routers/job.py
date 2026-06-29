@@ -1,14 +1,11 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from sqlalchemy.orm import Session
 
-from database import get_db
-from models.job import Job
 from schemas.job import JobCreate, JobUpdate, JobResponse
+from models.job import Job
+from database import get_db
 
-router = APIRouter(
-    prefix="/job",
-    tags=["job"]
-)
+router = APIRouter(prefix="/job", tags=["job"])
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=JobResponse)
@@ -28,15 +25,15 @@ def get_all_job(db: Session = Depends(get_db)):
 
 @router.get("/{job_id}", status_code=status.HTTP_200_OK, response_model=JobResponse)
 def get_job(job_id: int, db: Session = Depends(get_db)):
-    db_job = db.query(Job).filter(Job.id == job_id).first()
+    job = db.query(Job).filter(Job.id == job_id).first()
 
-    if not db_job:
+    if not job:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Job not found"
+            detail="Job Not Found"
         )
 
-    return db_job
+    return job
 
 
 @router.put("/{job_id}", status_code=status.HTTP_200_OK, response_model=JobResponse)
@@ -46,10 +43,10 @@ def update_job(job_id: int, job: JobUpdate, db: Session = Depends(get_db)):
     if not db_job:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Job not found"
+            detail="Job Not Found"
         )
 
-    for key, value in job.model_dump().items():
+    for key, value in job.dict().items():
         setattr(db_job, key, value)
 
     db.commit()
@@ -65,8 +62,10 @@ def delete_job(job_id: int, db: Session = Depends(get_db)):
     if not db_job:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="Job not found"
+            detail="Job Not Found"
         )
 
     db.delete(db_job)
     db.commit()
+
+    return {"detail": "Job deleted successfully."}
