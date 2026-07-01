@@ -22,6 +22,7 @@ if config.config_file_name is not None:
 from database import Base
 from models.company import Company
 from models.job import Job
+from models.users import User
 target_metadata = Base.metadata
 
 
