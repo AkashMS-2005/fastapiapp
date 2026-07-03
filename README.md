@@ -1,3 +1,6 @@
+# Project Structure
+
+```text
 fastapiapp/
 │
 ├── backend/
@@ -6,29 +9,29 @@ fastapiapp/
 │   │   └── main.py                 # FastAPI entry point
 │   │
 │   ├── models/
-│   │   ├── company.py
-│   │   ├── job.py
-│   │   └── user.py
+│   │   ├── company.py              # Company database model
+│   │   ├── job.py                  # Job database model
+│   │   └── user.py                 # User database model
 │   │
 │   ├── routers/
-│   │   ├── auth.py
-│   │   ├── company.py
-│   │   └── job.py
+│   │   ├── auth.py                 # Authentication APIs
+│   │   ├── company.py              # Company CRUD APIs
+│   │   └── job.py                  # Job CRUD APIs
 │   │
 │   ├── schemas/
-│   │   ├── company.py
-│   │   ├── job.py
-│   │   ├── token.py
-│   │   └── user.py
+│   │   ├── company.py              # Company request/response schemas
+│   │   ├── job.py                  # Job request/response schemas
+│   │   ├── token.py                # JWT token schema
+│   │   └── user.py                 # User request/response schemas
 │   │
 │   ├── utils/
-│   │   ├── hash.py
-│   │   └── token.py
+│   │   ├── hash.py                 # Password hashing utilities
+│   │   └── token.py                # JWT token generation & verification
 │   │
-│   ├── database.py
-│   ├── requirements.txt
-│   ├── .env
-│   └── env/                        # Virtual environment
+│   ├── database.py                 # Database configuration
+│   ├── requirements.txt            # Python dependencies
+│   ├── .env                        # Environment variables
+│   └── env/                        # Python virtual environment
 │
 ├── frontend/
 │   └── talentspark/
@@ -42,8 +45,12 @@ fastapiapp/
 │       │   │   └── Welcome.tsx
 │       │   │
 │       │   ├── Services/
+│       │   │   ├── AuthService.ts
 │       │   │   ├── CompanyService.ts
 │       │   │   └── JobService.ts
+│       │   │
+│       │   ├── pages/
+│       │   │   └── Login.tsx
 │       │   │
 │       │   ├── types/
 │       │   │   ├── company.ts
@@ -62,4 +69,5 @@ fastapiapp/
 │       ├── tsconfig.json
 │       └── node_modules/
 │
-├── README.md
+└── README.md
+```
