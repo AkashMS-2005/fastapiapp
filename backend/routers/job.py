@@ -4,12 +4,13 @@ from sqlalchemy.orm import Session
 from schemas.job import JobCreate, JobUpdate, JobResponse
 from models.job import Job
 from database import get_db
+from utils.outh2 import role_required, get_current_user
 
 router = APIRouter(prefix="/job", tags=["job"])
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=JobResponse)
-def create_job(job: JobCreate, db: Session = Depends(get_db)):
+def create_job(job: JobCreate, db: Session = Depends(get_db), current_user=Depends(role_required(["admin","hr"]))):
     db_job = Job(**job.dict())
     db.add(db_job)
     db.commit()
@@ -18,13 +19,13 @@ def create_job(job: JobCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/", status_code=status.HTTP_200_OK, response_model=list[JobResponse])
-def get_all_job(db: Session = Depends(get_db)):
+def get_all_job(db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     jobs = db.query(Job).all()
     return jobs
 
 
 @router.get("/{job_id}", status_code=status.HTTP_200_OK, response_model=JobResponse)
-def get_job(job_id: int, db: Session = Depends(get_db)):
+def get_job(job_id: int, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     job = db.query(Job).filter(Job.id == job_id).first()
 
     if not job:
@@ -37,7 +38,7 @@ def get_job(job_id: int, db: Session = Depends(get_db)):
 
 
 @router.put("/{job_id}", status_code=status.HTTP_200_OK, response_model=JobResponse)
-def update_job(job_id: int, job: JobUpdate, db: Session = Depends(get_db)):
+def update_job(job_id: int, job: JobUpdate, db: Session = Depends(get_db), current_user=Depends(role_required(["admin","hr"]))):
     db_job = db.query(Job).filter(Job.id == job_id).first()
 
     if not db_job:

@@ -1,4 +1,9 @@
 # fastapiapp
 ## creating fastapi application
 
-# CRUD Operations
+
+Architecture
+backend/
+    app/
+        --main.py
+        --database.py
