@@ -4,7 +4,7 @@ from schemas.company import CompanyCreate,CompanyUpdate,CompanyResponse
 from models.company import Company
 from sqlalchemy.orm import Session
 from database import get_db,SessionLocal
-from utils.outh2 import role_required,get_current_user
+from utils.oauth2 import role_required,get_current_user
 
 router = APIRouter(prefix="/company", tags=["company"])
 
