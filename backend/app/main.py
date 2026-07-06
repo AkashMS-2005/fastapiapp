@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import auth, company, job, chat
+from routers import auth, company, job, chat,rag
 
 app = FastAPI(
     title="TalentSpark API",
@@ -28,6 +28,7 @@ app.include_router(auth.router)
 app.include_router(company.router)
 app.include_router(job.router)
 app.include_router(chat.router)
+app.include_router(rag.router)
 
 # Root Endpoint
 @app.get("/")
