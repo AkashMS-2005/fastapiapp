@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from backend.services.langchain_service import chat
+from services.langchain_service import chat
 
 router = APIRouter(
     prefix="/chat",

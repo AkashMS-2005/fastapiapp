@@ -14,7 +14,7 @@ llm = ChatGroq(
     api_key=os.getenv("GROQ_API_KEY"),
 )
 
-prompt = ChatPromptTemplate.from_messages(A
+prompt = ChatPromptTemplate.from_messages(
     [
         (
             "system",

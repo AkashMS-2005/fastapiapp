@@ -1,49 +1,75 @@
-
-from jose import jwt
+from jose import jwt, JWTError, ExpiredSignatureError
 from datetime import datetime, timedelta
-from database import get_db
 from dotenv import load_dotenv
-import os
-from fastapi import Depends, HTTPException
 from sqlalchemy.orm import Session
+from fastapi import HTTPException
+from database import get_db
 from models.users import User
+import os
 
 load_dotenv()
+
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 
-def create_access_token(data: dict, expires_delta: timedelta =timedelta(hours=2)):
+
+def create_access_token(
+    data: dict,
+    expires_delta: timedelta = timedelta(hours=2)
+):
     to_encode = data.copy()
-    expire = datetime.now() + expires_delta
+
+    expire = datetime.utcnow() + expires_delta
+
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, key=SECRET_KEY, algorithm=ALGORITHM)
+
+    encoded_jwt = jwt.encode(
+        to_encode,
+        SECRET_KEY,
+        algorithm=ALGORITHM
+    )
+
     return encoded_jwt
 
-def verify_access_token(token: str, db: Session = Depends(get_db)):
-    to_decode = jwt.decode(token, key=SECRET_KEY, algorithms=[ALGORITHM])
 
-    user_id = None
-    if isinstance(to_decode, dict):
-        user_id = to_decode.get("user_id") or to_decode.get("sub")
-
-    if not user_id:
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid authentication credentials"
-        )
+def verify_access_token(token: str, db: Session):
 
     try:
-        user_id = int(user_id)
-    except (TypeError, ValueError):
-        raise HTTPException(
-            status_code=401,
-            detail="Invalid authentication credentials"
+
+        payload = jwt.decode(
+            token,
+            SECRET_KEY,
+            algorithms=[ALGORITHM]
         )
 
-    current_user = db.query(User).filter(User.id == user_id).first()
-    if current_user is None:
+        user_id = payload.get("sub")
+
+        if user_id is None:
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid Token"
+            )
+
+        current_user = db.query(User).filter(
+            User.id == int(user_id)
+        ).first()
+
+        if current_user is None:
+            raise HTTPException(
+                status_code=401,
+                detail="User Not Found"
+            )
+
+        return current_user
+
+    except ExpiredSignatureError:
         raise HTTPException(
             status_code=401,
-            detail="Invalid authentication credentials"
+            detail="Token Expired"
         )
-    return current_user
+
+    except JWTError:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid Token"
+        )
