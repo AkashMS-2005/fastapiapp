@@ -1,22 +1,24 @@
 import api from "./api";
-import type { ChatRequest, ChatResponse } from "../types/chat";
 
-const CHAT_ENDPOINT = "/chat";
+import type {
+    ChatRequest,
+    ChatResponse,
+} from "../types/chat";
 
 export const sendMessage = async (
-  message: string,
-  sessionId: string = "default_session"
-): Promise<ChatResponse> => {
-  const payload: ChatRequest = {
-    message,
-    session_id: sessionId,
-  };
+    message: string,
+    sessionId: string
+): Promise<string> => {
 
-  const response = await api.post<ChatResponse>(`${CHAT_ENDPOINT}/`, payload);
-  return response.data;
-};
+    const body: ChatRequest = {
+        message,
+        session_id: sessionId,
+    };
 
-export const checkChatHealth = async (): Promise<{ status: string; service: string }> => {
-  const response = await api.get(`${CHAT_ENDPOINT}/health`);
-  return response.data;
+    const response = await api.post<ChatResponse>(
+        "/chat/",
+        body
+    );
+
+    return response.data.response;
 };

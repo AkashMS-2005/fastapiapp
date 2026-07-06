@@ -1,5 +1,6 @@
-from fastapi import APIRouter
-from pydantic import BaseModel
+from fastapi import APIRouter, HTTPException
+
+from schemas.chat import ChatRequest, ChatResponse
 
 from services.langchain_service import chat
 
@@ -9,20 +10,23 @@ router = APIRouter(
 )
 
 
-class ChatRequest(BaseModel):
-    session_id: str
-    message: str
-
-
-class ChatResponse(BaseModel):
-    response: str
-
-
 @router.post("/", response_model=ChatResponse)
-async def chat_endpoint(request: ChatRequest):
-    reply = chat(
-        session_id=request.session_id,
-        message=request.message
-    )
+def chatbot(request: ChatRequest):
 
-    return ChatResponse(response=reply)
+    try:
+
+        response = chat(
+            request.message,
+            request.session_id
+        )
+
+        return ChatResponse(
+            response=response
+        )
+
+    except Exception as e:
+
+        raise HTTPException(
+            status_code=500,
+            detail=str(e)
+        )

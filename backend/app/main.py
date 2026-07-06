@@ -1,15 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from routers import company, job, auth, chat
+from routers import auth, company, job, chat
 
-app = FastAPI()
+app = FastAPI(
+    title="TalentSpark API",
+    version="1.0.0",
+    description="TalentSpark Backend using FastAPI"
+)
 
-# Allow React Frontend
+# React Frontend URL
 origins = [
     "http://localhost:5173",
 ]
 
+# CORS Configuration
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -18,13 +23,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Routers
+# Include Routers
 app.include_router(auth.router)
 app.include_router(company.router)
 app.include_router(job.router)
 app.include_router(chat.router)
 
-
+# Root Endpoint
 @app.get("/")
 def root():
-    return {"message": "FastAPI Backend Running Successfully"}
+    return {
+        "message": "TalentSpark Backend Running Successfully"
+    }
+
+# Health Check Endpoint
+@app.get("/health")
+def health():
+    return {
+        "status": "OK"
+    }

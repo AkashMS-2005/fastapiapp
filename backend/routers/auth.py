@@ -11,18 +11,28 @@ from utils.token import create_access_token
 
 router = APIRouter(
     prefix="/auth",
-    tags=["Auth"]
+    tags=["Authentication"]
 )
 
 
-@router.post("/register", response_model=UserResponse)
+@router.post(
+    "/register",
+    response_model=UserResponse,
+    status_code=status.HTTP_201_CREATED
+)
 def register(
     user: UserCreate,
     db: Session = Depends(get_db)
 ):
-    existing_user = db.query(User).filter(
-        User.email == user.email
-    ).first()
+    """
+    Register a new user.
+    """
+
+    existing_user = (
+        db.query(User)
+        .filter(User.email == user.email)
+        .first()
+    )
 
     if existing_user:
         raise HTTPException(
@@ -30,53 +40,58 @@ def register(
             detail="Email already registered"
         )
 
-    hashed_password = hash_password(user.password)
-
-    db_user = User(
+    new_user = User(
         name=user.name,
         email=user.email,
-        hashed_password=hashed_password,
+        hashed_password=hash_password(user.password),
         role=user.role
     )
 
-    db.add(db_user)
+    db.add(new_user)
     db.commit()
-    db.refresh(db_user)
+    db.refresh(new_user)
 
-    return db_user
+    return new_user
 
 
-@router.post("/login", response_model=Token)
+@router.post(
+    "/login",
+    response_model=Token,
+    status_code=status.HTTP_200_OK
+)
 def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
-    # Find user by email
-    existing_user = db.query(User).filter(
-        User.email == form_data.username
-    ).first()
+    """
+    Authenticate user and generate JWT token.
+    """
 
-    if existing_user is None:
+    user = (
+        db.query(User)
+        .filter(User.email == form_data.username)
+        .first()
+    )
+
+    if user is None:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password"
         )
 
-    # Verify password
     if not verify_password(
         form_data.password,
-        existing_user.hashed_password
+        user.hashed_password
     ):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password"
         )
 
-    # Generate JWT token
     access_token = create_access_token(
         data={
-            "sub": str(existing_user.id),
-            "role": existing_user.role
+            "sub": str(user.id),
+            "role": user.role
         }
     )
 

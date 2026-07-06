@@ -7,6 +7,9 @@ import type {
 
 import api from "./api";
 
+/**
+ * Login User
+ */
 export const login = async (
     credentials: LoginRequest
 ): Promise<LoginResponse> => {
@@ -21,25 +24,25 @@ export const login = async (
         formData,
         {
             headers: {
-                "Content-Type":
-                    "application/x-www-form-urlencoded",
+                "Content-Type": "application/x-www-form-urlencoded",
             },
         }
     );
 
-    localStorage.setItem(
-        "token",
-        response.data.access_token
-    );
+    // Save JWT Token
+    localStorage.setItem("token", response.data.access_token);
 
     return response.data;
 };
 
+/**
+ * Register User
+ */
 export const register = async (
     user: RegisterRequest
 ): Promise<RegisterResponse> => {
 
-    const response = await api.post(
+    const response = await api.post<RegisterResponse>(
         "/auth/register",
         user
     );
@@ -47,10 +50,23 @@ export const register = async (
     return response.data;
 };
 
-export const logout = () => {
+/**
+ * Logout User
+ */
+export const logout = (): void => {
     localStorage.removeItem("token");
 };
 
-export const isAuthenticated = () => {
+/**
+ * Check Authentication
+ */
+export const isAuthenticated = (): boolean => {
     return localStorage.getItem("token") !== null;
+};
+
+/**
+ * Get Stored JWT Token
+ */
+export const getToken = (): string | null => {
+    return localStorage.getItem("token");
 };
