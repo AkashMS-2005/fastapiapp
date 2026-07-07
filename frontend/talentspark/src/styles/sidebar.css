@@ -66,13 +66,14 @@ font-weight:500;
 
 }
 
-.sidebar nav a:hover{
+.sidebar nav a:hover,
+.sidebar nav a.active{
 
-background:#2563eb;
+    background:#2563eb;
 
-color:white;
+    color:white;
 
-transform:translateX(6px);
+    transform:translateX(6px);
 
 }
 

@@ -1,91 +1,48 @@
+import { NavLink } from "react-router-dom";
 import {
     Home,
     Briefcase,
-    Building2,
     FileText,
-    Search,
     Bot,
     User
 } from "lucide-react";
-
 import "../styles/sidebar.css";
 
 function Sidebar() {
-
     return (
-
         <aside className="sidebar">
-
-            <div className="logo">
-
+            <div className="logo" style={{ cursor: "default" }}>
                 🚀 TalentSpark
-
             </div>
 
             <nav>
-
-                <a href="#">
-
-                    <Home size={20}/>
-
+                <NavLink to="/" end className={({ isActive }) => (isActive ? "active" : "")}>
+                    <Home size={20} />
                     Dashboard
+                </NavLink>
 
-                </a>
+                <NavLink to="/job-matcher" className={({ isActive }) => (isActive ? "active" : "")}>
+                    <Briefcase size={20} />
+                    AI Job Matcher
+                </NavLink>
 
-                <a href="#">
-
-                    <Building2 size={20}/>
-
-                    Companies
-
-                </a>
-
-                <a href="#">
-
-                    <Briefcase size={20}/>
-
-                    Jobs
-
-                </a>
-
-                <a href="#">
-
-                    <Search size={20}/>
-
-                    AI Search
-
-                </a>
-
-                <a href="#">
-
-                    <Bot size={20}/>
-
+                <NavLink to="/chat" className={({ isActive }) => (isActive ? "active" : "")}>
+                    <Bot size={20} />
                     AI Assistant
+                </NavLink>
 
-                </a>
-
-                <a href="#">
-
-                    <FileText size={20}/>
-
+                <NavLink to="/resume-analyser" className={({ isActive }) => (isActive ? "active" : "")}>
+                    <FileText size={20} />
                     Resume AI
+                </NavLink>
 
-                </a>
-
-                <a href="#">
-
-                    <User size={20}/>
-
-                    Profile
-
-                </a>
-
+                <NavLink to="/profile" className={({ isActive }) => (isActive ? "active" : "")} style={{ opacity: 0.6, cursor: "not-allowed" }} onClick={(e) => e.preventDefault()}>
+                    <User size={20} />
+                    Profile (Lock)
+                </NavLink>
             </nav>
-
         </aside>
-
     );
-
 }
 
 export default Sidebar;

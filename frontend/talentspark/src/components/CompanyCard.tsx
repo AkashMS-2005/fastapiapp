@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "../styles/cards.css";
 import type { Company } from "../types/company";
 
