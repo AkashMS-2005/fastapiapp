@@ -1,198 +1,231 @@
 import { useEffect, useRef, useState } from "react";
-import { sendMessage } from "../Services/ChatService";
-import type { ChatMessage } from "../types/chat";
-import "./chat.css";
+import ChatService from "../Services/ChatService";import "../styles/chat.css";
 
-const STORAGE_KEY = "talentspark_chat_history";
+interface Message {
+    id: number;
+    sender: "user" | "bot";
+    text: string;
+    time: string;
+}
 
 function Chat() {
-    const [messages, setMessages] = useState<ChatMessage[]>([]);
+
+    const [messages, setMessages] = useState<Message[]>([
+        {
+            id: 1,
+            sender: "bot",
+            text:
+                "👋 Hello! I'm TalentSpark AI.\n\nI can help you:\n\n• Find Jobs\n• Analyse Resume\n• Career Guidance\n• Interview Questions\n• AI Search",
+            time: new Date().toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+            }),
+        },
+    ]);
+
     const [input, setInput] = useState("");
+
     const [loading, setLoading] = useState(false);
 
     const messagesEndRef = useRef<HTMLDivElement>(null);
 
-    const [sessionId] = useState(() => {
-        let id = localStorage.getItem("chat_session");
-
-        if (!id) {
-            id = crypto.randomUUID();
-            localStorage.setItem("chat_session", id);
-        }
-
-        return id;
-    });
-
-    // Load history only once
     useEffect(() => {
-        const saved = localStorage.getItem(STORAGE_KEY);
 
-        if (saved) {
-            const history: ChatMessage[] = JSON.parse(saved).map((m: any) => ({
-                ...m,
-                timestamp: new Date(m.timestamp),
-            }));
-
-            setMessages(history);
-        }
-    }, []);
-
-    useEffect(() => {
         messagesEndRef.current?.scrollIntoView({
             behavior: "smooth",
         });
+
     }, [messages]);
 
-    // Helper function that updates BOTH state and localStorage
-    const updateHistory = (newMessages: ChatMessage[]) => {
-        setMessages(newMessages);
-        localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify(newMessages)
-        );
-    };
+    const handleSend = async () => {
 
-    const handleSendMessage = async (
-        e: React.FormEvent
-    ) => {
-        e.preventDefault();
+        if (!input.trim()) return;
 
-        if (!input.trim() || loading) return;
+        const question = input;
 
-        const text = input;
+        const userMessage: Message = {
 
-        setInput("");
-
-        const userMessage: ChatMessage = {
             id: Date.now(),
+
             sender: "user",
-            text,
-            timestamp: new Date(),
+
+            text: question,
+
+            time: new Date().toLocaleTimeString([], {
+
+                hour: "2-digit",
+
+                minute: "2-digit",
+
+            }),
+
         };
 
-        const userHistory = [...messages, userMessage];
-        updateHistory(userHistory);
+        setMessages((prev) => [...prev, userMessage]);
+
+        setInput("");
 
         setLoading(true);
 
         try {
-            const reply = await sendMessage(
-                text,
-                sessionId
+
+            const reply = await ChatService.sendMessage(
+                question,
+                "default-session"
             );
 
-            const botMessage: ChatMessage = {
+            const botMessage: Message = {
+
                 id: Date.now() + 1,
+
                 sender: "bot",
+
                 text: reply,
-                timestamp: new Date(),
+
+                time: new Date().toLocaleTimeString([], {
+
+                    hour: "2-digit",
+
+                    minute: "2-digit",
+
+                }),
+
             };
 
-            updateHistory([
-                ...userHistory,
-                botMessage,
-            ]);
-        } catch {
-            const errorMessage: ChatMessage = {
-                id: Date.now() + 1,
-                sender: "bot",
-                text: "❌ Unable to contact AI server.",
-                timestamp: new Date(),
-            };
+            setMessages((prev) => [...prev, botMessage]);
 
-            updateHistory([
-                ...userHistory,
-                errorMessage,
+        } catch (err) {
+
+            console.error(err);
+
+            setMessages((prev) => [
+
+                ...prev,
+
+                {
+
+                    id: Date.now(),
+
+                    sender: "bot",
+
+                    text: "❌ Unable to contact AI.",
+
+                    time: new Date().toLocaleTimeString([], {
+
+                        hour: "2-digit",
+
+                        minute: "2-digit",
+
+                    }),
+
+                },
+
             ]);
+
         } finally {
-            setLoading(false);
-        }
-    };
 
-    const clearHistory = () => {
-        localStorage.removeItem(STORAGE_KEY);
-        setMessages([]);
+            setLoading(false);
+
+        }
+
     };
 
     return (
+
         <div className="chat-container">
 
-            <div className="chat-messages">
+            <div className="chat-header">
 
-                {messages.length === 0 && (
-                    <div className="welcome">
-                        <h3>Hello Dosthh 👋</h3>
+                <h3>🤖 TalentSpark AI</h3>
 
-                        <p>I'm your AI Career Assistant.</p>
+                <span>Online</span>
 
-                        <p>
-                            Ask me about jobs,
-                            companies,
-                            coding,
-                            interviews,
-                            placements,
-                            AI,
-                            and career guidance.
-                        </p>
-                    </div>
-                )}
+            </div>
+
+            <div className="chat-body">
 
                 {messages.map((msg) => (
+
                     <div
                         key={msg.id}
                         className={`message ${msg.sender}`}
                     >
-                        <div className="bubble">
-                            {msg.text}
 
-                            <div className="time">
-                                {msg.timestamp.toLocaleTimeString([], {
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                })}
-                            </div>
+                        <div className="bubble">
+
+                            {msg.text
+                                .split("\n")
+                                .map((line, i) => (
+                                    <p key={i}>{line}</p>
+                                ))}
+
+                            <small>{msg.time}</small>
+
                         </div>
+
                     </div>
+
                 ))}
 
                 {loading && (
+
                     <div className="message bot">
+
                         <div className="bubble">
+
                             <div className="typing">
+
                                 <span></span>
+
                                 <span></span>
+
                                 <span></span>
+
                             </div>
+
                         </div>
+
                     </div>
+
                 )}
 
                 <div ref={messagesEndRef}></div>
 
             </div>
 
-            <form
-                onSubmit={handleSendMessage}
-                className="chat-input-area"
-            >
+            <div className="chat-footer">
+
                 <input
+
                     value={input}
-                    onChange={(e) =>
-                        setInput(e.target.value)
-                    }
+
                     placeholder="Ask TalentSpark AI..."
+
+                    onChange={(e) => setInput(e.target.value)}
+
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            handleSend();
+                        }
+                    }}
+
                 />
 
                 <button
-                    type="submit"
+                    onClick={handleSend}
                     disabled={loading}
                 >
+
                     ➤
+
                 </button>
-            </form>
+
+            </div>
 
         </div>
+
     );
+
 }
 
 export default Chat;

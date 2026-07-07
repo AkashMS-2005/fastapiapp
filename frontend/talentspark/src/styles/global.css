@@ -1,0 +1,244 @@
+/* ==========================
+   GOOGLE FONT
+========================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+/* ==========================
+   VARIABLES
+========================== */
+
+:root {
+
+    --primary: #4f7cff;
+    --primary-dark: #3458d4;
+
+    --secondary: #7c3aed;
+
+    --success: #22c55e;
+    --danger: #ef4444;
+
+    --bg: #0f172a;
+    --bg-light: #111827;
+
+    --card: rgba(30, 41, 59, .70);
+
+    --border: rgba(255,255,255,.08);
+
+    --text: #f8fafc;
+
+    --text-light: #94a3b8;
+
+    --shadow:
+        0 10px 30px rgba(0,0,0,.35);
+
+    --radius: 18px;
+
+    --transition: .30s ease;
+}
+
+/* ==========================
+   RESET
+========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:"Inter",sans-serif;
+
+    background:
+    radial-gradient(circle at top left,#1e3a8a 0%,#0f172a 45%,#020617 100%);
+
+    color:var(--text);
+
+    min-height:100vh;
+
+}
+
+#root{
+
+    min-height:100vh;
+
+}
+
+/* ==========================
+   SCROLLBAR
+========================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#334155;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#475569;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#0f172a;
+
+}
+
+/* ==========================
+   LINKS
+========================== */
+
+a{
+
+    text-decoration:none;
+
+    color:inherit;
+
+}
+
+/* ==========================
+   BUTTON
+========================== */
+
+button{
+
+    font-family:inherit;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+}
+
+button:hover{
+
+    transform:translateY(-2px);
+
+}
+
+/* ==========================
+   INPUT
+========================== */
+
+input,
+textarea,
+select{
+
+    font-family:inherit;
+
+    outline:none;
+
+}
+
+/* ==========================
+   GLASS CARD
+========================== */
+
+.glass{
+
+    background:rgba(255,255,255,.06);
+
+    backdrop-filter:blur(16px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:18px;
+
+}
+
+/* ==========================
+   SECTION
+========================== */
+
+.section{
+
+    width:90%;
+
+    max-width:1300px;
+
+    margin:auto;
+
+    padding:60px 0;
+
+}
+
+/* ==========================
+   TITLE
+========================== */
+
+.section-title{
+
+    font-size:38px;
+
+    font-weight:700;
+
+    text-align:center;
+
+    margin-bottom:40px;
+
+}
+
+.section-subtitle{
+
+    text-align:center;
+
+    color:var(--text-light);
+
+    margin-bottom:50px;
+
+}
+
+/* ==========================
+   CARD
+========================== */
+
+.card{
+
+    background:var(--card);
+
+    backdrop-filter:blur(18px);
+
+    border-radius:20px;
+
+    border:1px solid var(--border);
+
+    box-shadow:var(--shadow);
+
+}
+
+/* ==========================
+   HOVER
+========================== */
+
+.hover-card{
+
+    transition:.35s;
+
+}
+
+.hover-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+    0 20px 45px rgba(0,0,0,.40);
+
+}

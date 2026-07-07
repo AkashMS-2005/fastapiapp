@@ -1,23 +1,23 @@
 import { useState } from "react";
 import RagService from "../Services/RagService";
 import type { JobMatchResult } from "../types/rag";
-import "./rag.css";
+import "../styles/rag.css";
 
-const JobMatch = () => {
+function JobMatch() {
 
     const [skills, setSkills] = useState("");
 
     const [experience, setExperience] = useState(0);
 
-    const [matches, setMatches] = useState<JobMatchResult[]>([]);
-
     const [loading, setLoading] = useState(false);
+
+    const [matches, setMatches] = useState<JobMatchResult[]>([]);
 
     const handleMatch = async () => {
 
         if (!skills.trim()) {
 
-            alert("Enter your skills.");
+            alert("Please enter your skills.");
 
             return;
 
@@ -28,21 +28,15 @@ const JobMatch = () => {
             setLoading(true);
 
             const response = await RagService.jobMatch(
-
-                skills
-                    .split(",")
-                    .map(skill => skill.trim())
-                    .filter(skill => skill.length > 0),
-
+                skills.split(",").map(skill => skill.trim()),
                 experience
-
             );
 
             setMatches(response.data.matches);
 
-        } catch (error) {
+        } catch (err) {
 
-            console.error(error);
+            console.error(err);
 
             alert("Unable to match jobs.");
 
@@ -56,83 +50,154 @@ const JobMatch = () => {
 
     return (
 
-        <div className="rag-card">
+        <section className="rag-container">
 
-            <h2>🎯 AI Job Matching</h2>
+            <div className="rag-box">
 
-            <input
-                className="rag-input"
-                type="text"
-                placeholder="Example: Python, FastAPI, React"
-                value={skills}
-                onChange={(e) => setSkills(e.target.value)}
-            />
+                <div className="rag-header">
 
-            <input
-                className="rag-input"
-                type="number"
-                min={0}
-                placeholder="Years of Experience"
-                value={experience}
-                onChange={(e) => setExperience(Number(e.target.value))}
-            />
+                    <h1>
 
-            <button
-                className="rag-btn"
-                onClick={handleMatch}
-                disabled={loading}
-            >
-                {loading ? "Matching..." : "Match Jobs"}
-            </button>
+                        🎯 AI Job Matcher
 
-            {
+                    </h1>
 
-                matches.length > 0 && (
+                    <p>
 
-                    <div className="rag-result">
+                        Discover the best jobs based on your skills and experience.
 
-                        <h3>Recommended Jobs</h3>
+                    </p>
+
+                </div>
+
+                <div className="match-form">
+
+                    <input
+
+                        type="text"
+
+                        className="match-input"
+
+                        placeholder="Python, React, FastAPI, SQL"
+
+                        value={skills}
+
+                        onChange={(e)=>setSkills(e.target.value)}
+
+                    />
+
+                    <input
+
+                        type="number"
+
+                        className="match-input"
+
+                        value={experience}
+
+                        min={0}
+
+                        placeholder="Years of Experience"
+
+                        onChange={(e)=>setExperience(Number(e.target.value))}
+
+                    />
+
+                    <button
+
+                        className="premium-btn"
+
+                        onClick={handleMatch}
+
+                        disabled={loading}
+
+                    >
 
                         {
-    matches.map((job) => (
 
-        <div
-            key={job.job_id}
-            className="job-result-card"
-        >
+                            loading
 
-            <h4>{job.title}</h4>
+                            ?
 
-            <p>
-                <strong>Description:</strong>{" "}
-                {job.description}
-            </p>
+                            "Matching..."
 
-            <p>
-                <strong>Salary:</strong>{" "}
-                ₹{job.salary?.toLocaleString()}
-            </p>
+                            :
 
-            <p>
-                <strong>Match Score:</strong>{" "}
-                {job.match_score.toFixed(2)}%
-            </p>
+                            "🚀 Find Jobs"
 
-        </div>
+                        }
 
-    ))
-}
+                    </button>
+
+                </div>
+
+                {
+
+                    matches.length>0 &&
+
+                    <div className="match-grid">
+
+                        {
+
+                            matches.map(job=>(
+
+                                <div
+
+                                    className="match-card"
+
+                                    key={job.job_id}
+
+                                >
+
+                                    <div className="match-score">
+
+                                        {job.match_score.toFixed(0)}%
+
+                                    </div>
+
+                                    <h2>
+
+                                        {job.title}
+
+                                    </h2>
+
+                                    <p>
+
+                                        {job.description}
+
+                                    </p>
+
+                                    <div className="match-footer">
+
+                                        <span>
+
+                                            💰 ₹ {job.salary}
+
+                                        </span>
+
+                                        <button className="apply-btn">
+
+                                            Apply Now
+
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            ))
+
+                        }
 
                     </div>
 
-                )
+                }
 
-            }
+            </div>
 
-        </div>
+        </section>
 
     );
 
-};
+}
 
 export default JobMatch;

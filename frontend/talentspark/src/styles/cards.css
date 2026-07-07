@@ -1,0 +1,167 @@
+/* =====================================
+            JOB CARD
+====================================== */
+
+.job-card{
+
+    background:rgba(255,255,255,.05);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:24px;
+
+    padding:28px;
+
+    transition:.35s;
+
+}
+
+.job-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.35);
+
+}
+
+.job-header{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+}
+
+.job-logo{
+
+    width:60px;
+
+    height:60px;
+
+    border-radius:18px;
+
+    background:linear-gradient(
+        135deg,
+        #3b82f6,
+        #7c3aed
+    );
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:28px;
+
+    color:white;
+
+}
+
+.job-header h3{
+
+    color:white;
+
+    margin-bottom:5px;
+
+}
+
+.job-header span{
+
+    color:#94a3b8;
+
+}
+
+.job-badges{
+
+    display:flex;
+
+    gap:10px;
+
+    margin:22px 0;
+
+}
+
+.badge.blue{
+
+    background:#2563eb;
+
+}
+
+.badge.green{
+
+    background:#16a34a;
+
+}
+
+.job-description{
+
+    color:#cbd5e1;
+
+    line-height:1.7;
+
+    margin-bottom:30px;
+
+}
+
+.job-footer{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+}
+
+.job-footer h4{
+
+    color:white;
+
+    font-size:24px;
+
+}
+
+.job-footer span{
+
+    color:#94a3b8;
+
+}
+
+.apply-btn{
+
+    border:none;
+
+    padding:12px 24px;
+
+    border-radius:14px;
+
+    background:linear-gradient(
+        135deg,
+        #2563eb,
+        #7c3aed
+    );
+
+    color:white;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.apply-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 15px 30px rgba(37,99,235,.35);
+
+}

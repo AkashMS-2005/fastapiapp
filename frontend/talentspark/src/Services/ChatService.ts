@@ -5,20 +5,26 @@ import type {
     ChatResponse,
 } from "../types/chat";
 
-export const sendMessage = async (
-    message: string,
-    sessionId: string
-): Promise<string> => {
+class ChatService {
 
-    const body: ChatRequest = {
-        message,
-        session_id: sessionId,
-    };
+    async sendMessage(
+        message: string,
+        sessionId: string
+    ): Promise<string> {
 
-    const response = await api.post<ChatResponse>(
-        "/chat/",
-        body
-    );
+        const body: ChatRequest = {
+            message,
+            session_id: sessionId,
+        };
 
-    return response.data.response;
-};
+        const response = await api.post<ChatResponse>(
+            "/chat/",
+            body
+        );
+
+        return response.data.response;
+    }
+
+}
+
+export default new ChatService();

@@ -1,63 +1,144 @@
 import { useState } from "react";
 import RagService from "../Services/RagService";
-import "./rag.css";
+import "../styles/rag.css";
 
-const ResumeAnalysis = () => {
-  const [resume, setResume] = useState("");
-  const [analysis, setAnalysis] = useState("");
-  const [loading, setLoading] = useState(false);
+function ResumeAnalysis() {
 
-  const analyseResume = async () => {
-    if (!resume.trim()) {
-      alert("Please paste your resume.");
-      return;
-    }
+    const [resume, setResume] = useState("");
 
-    try {
-      setLoading(true);
+    const [loading, setLoading] = useState(false);
 
-      const response = await RagService.analyseResume(resume);
+    const [analysis, setAnalysis] = useState("");
 
-      setAnalysis(response.data.analysis);
-    } catch (error) {
-      console.error(error);
-      alert("Failed to analyse resume.");
-    } finally {
-      setLoading(false);
-    }
-  };
+    const analyseResume = async () => {
 
-  return (
-    <div className="rag-card">
+        if (!resume.trim()) {
 
-      <h2>📄 Resume Analyzer</h2>
+            alert("Please enter your resume.");
 
-      <textarea
-        className="rag-textarea"
-        rows={12}
-        placeholder="Paste your resume here..."
-        value={resume}
-        onChange={(e) => setResume(e.target.value)}
-      />
+            return;
 
-      <button
-        className="rag-btn"
-        onClick={analyseResume}
-        disabled={loading}
-      >
-        {loading ? "Analysing..." : "Analyse Resume"}
-      </button>
+        }
 
-      {analysis && (
-        <div className="rag-result">
-          <h3>Analysis</h3>
+        try {
 
-          <pre>{analysis}</pre>
-        </div>
-      )}
+            setLoading(true);
 
-    </div>
-  );
-};
+            const response = await RagService.analyseResume(resume);
+
+            setAnalysis(response.data.analysis);
+
+        }
+
+        catch (err) {
+
+            console.error(err);
+
+            alert("Unable to analyse resume.");
+
+        }
+
+        finally {
+
+            setLoading(false);
+
+        }
+
+    };
+
+    return (
+
+        <section className="rag-container">
+
+            <div className="rag-box">
+
+                <div className="rag-header">
+
+                    <div>
+
+                        <h1>
+
+                            🤖 AI Resume Analyzer
+
+                        </h1>
+
+                        <p>
+
+                            Upload or paste your resume and receive AI-powered
+                            career insights instantly.
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <textarea
+
+                    className="resume-input"
+
+                    placeholder="Paste your resume here..."
+
+                    value={resume}
+
+                    onChange={(e)=>setResume(e.target.value)}
+
+                />
+
+                <button
+
+                    className="premium-btn"
+
+                    onClick={analyseResume}
+
+                    disabled={loading}
+
+                >
+
+                    {
+
+                        loading
+
+                        ?
+
+                        "Analyzing Resume..."
+
+                        :
+
+                        "🚀 Analyze Resume"
+
+                    }
+
+                </button>
+
+                {
+
+                    analysis &&
+
+                    <div className="analysis-card">
+
+                        <h2>
+
+                            AI Analysis
+
+                        </h2>
+
+                        <pre>
+
+                            {analysis}
+
+                        </pre>
+
+                    </div>
+
+                }
+
+            </div>
+
+        </section>
+
+    );
+
+}
 
 export default ResumeAnalysis;

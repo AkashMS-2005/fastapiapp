@@ -19,11 +19,17 @@ export interface JobSearchRequest {
 }
 
 export interface SemanticSearchResult {
-  id: number;
-  title: string;
-  company: string;
-  description: string;
-  score: number;
+
+    job_id?: number;
+
+    title: string;
+
+    description: string;
+
+    salary?: number;
+
+    score: number;
+
 }
 
 export interface SemanticSearchResponse {

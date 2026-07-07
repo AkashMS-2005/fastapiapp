@@ -1,23 +1,24 @@
 import { useState } from "react";
 import RagService from "../Services/RagService";
 import type { SemanticSearchResult } from "../types/rag";
-import "./rag.css";
+import "../styles/rag.css";
 
-const SemanticSearch = () => {
+function SemanticSearch() {
 
     const [query, setQuery] = useState("");
 
-    const [jobs, setJobs] = useState<SemanticSearchResult[]>([]);
-
     const [loading, setLoading] = useState(false);
+
+    const [results, setResults] = useState<SemanticSearchResult[]>([]);
 
     const handleSearch = async () => {
 
         if (!query.trim()) {
 
-            alert("Enter a job search query.");
+            alert("Please enter a search query.");
 
             return;
+
         }
 
         try {
@@ -26,15 +27,19 @@ const SemanticSearch = () => {
 
             const response = await RagService.semanticSearch(query);
 
-            setJobs(response.data.results);
+            setResults(response.data.results);
 
-        } catch (error) {
+        }
+
+        catch (error) {
 
             console.error(error);
 
-            alert("Failed to search jobs.");
+            alert("Search failed.");
 
-        } finally {
+        }
+
+        finally {
 
             setLoading(false);
 
@@ -44,83 +49,150 @@ const SemanticSearch = () => {
 
     return (
 
-        <div className="rag-card">
+        <section className="rag-container">
 
-            <h2>🔍 Semantic Job Search</h2>
+            <div className="rag-box">
 
-            <input
-                className="rag-input"
-                type="text"
-                placeholder="Example: Python Backend Developer"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-            />
+                <div className="rag-header">
 
-            <button
-                className="rag-btn"
-                onClick={handleSearch}
-                disabled={loading}
-            >
-                {loading ? "Searching..." : "Search Jobs"}
-            </button>
+                    <h1>
 
-            {jobs.length > 0 && (
+                        🔍 AI Semantic Job Search
 
-                <div className="rag-result">
+                    </h1>
 
-                    <h3>Matching Jobs</h3>
+                    <p>
 
-                    {jobs.map((job) => (
+                        Search jobs using natural language powered by AI.
 
-                        <div
-                            key={job.id}
-                            className="job-result-card"
-                        >
-
-                            <h4>{job.title}</h4>
-
-                            <p>
-
-                                <strong>Company:</strong>
-
-                                {" "}
-
-                                {job.company}
-
-                            </p>
-
-                            <p>
-
-                                <strong>Description:</strong>
-
-                                {" "}
-
-                                {job.description}
-
-                            </p>
-
-                            <p>
-
-                                <strong>Similarity Score:</strong>
-
-                                {" "}
-
-                                {(job.score * 100).toFixed(2)}%
-
-                            </p>
-
-                        </div>
-
-                    ))}
+                    </p>
 
                 </div>
 
-            )}
+                <div className="search-box">
 
-        </div>
+                    <input
+
+                        type="text"
+
+                        placeholder="Example: Python Developer with FastAPI"
+
+                        value={query}
+
+                        onChange={(e)=>setQuery(e.target.value)}
+
+                    />
+
+                    <button
+
+                        className="premium-btn"
+
+                        onClick={handleSearch}
+
+                        disabled={loading}
+
+                    >
+
+                        {
+
+                            loading
+
+                            ?
+
+                            "Searching..."
+
+                            :
+
+                            "Search"
+
+                        }
+
+                    </button>
+
+                </div>
+
+                {
+
+                    results.length>0 &&
+
+                    <div className="search-results">
+
+                        {
+
+                            results.map((job)=>(
+
+                                <div
+
+                                    key={job.job_id}
+
+                                    className="search-card"
+
+                                >
+
+                                    <div className="search-header">
+
+                                        <div>
+
+                                            <h2>
+
+                                                {job.title}
+
+                                            </h2>
+
+                                            <span>
+
+                                                AI Recommended Job
+
+                                            </span>
+
+                                        </div>
+
+                                        <div className="score-badge">
+
+                                            {(job.score*100).toFixed(1)}%
+
+                                        </div>
+
+                                    </div>
+
+                                    <p>
+
+                                        {job.description}
+
+                                    </p>
+
+                                    <div className="search-footer">
+
+                                        <span>
+
+                                            💰 ₹ {job.salary}
+
+                                        </span>
+
+                                        <button className="premium-btn">
+
+                                            View Job
+
+                                        </button>
+
+                                    </div>
+
+                                </div>
+
+                            ))
+
+                        }
+
+                    </div>
+
+                }
+
+            </div>
+
+        </section>
 
     );
 
-};
+}
 
 export default SemanticSearch;
