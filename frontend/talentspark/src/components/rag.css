@@ -1,0 +1,444 @@
+/* ==========================================
+        TALENTSPARK AI - PREMIUM RAG UI
+========================================== */
+
+.rag-section-title{
+    text-align:center;
+    font-size:38px;
+    font-weight:700;
+    margin:50px 0;
+    color:#fff;
+    letter-spacing:1px;
+}
+
+/* ===========================
+        CARD
+=========================== */
+
+.rag-card{
+
+    width:100%;
+    max-width:1100px;
+
+    margin:40px auto;
+
+    padding:35px;
+
+    border-radius:22px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    backdrop-filter:blur(18px);
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.30);
+
+    transition:.35s;
+
+}
+
+.rag-card:hover{
+
+    transform:
+        translateY(-5px);
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,.45);
+
+}
+
+/* ===========================
+        TITLES
+=========================== */
+
+.rag-card h2{
+
+    text-align:center;
+
+    font-size:30px;
+
+    margin-bottom:28px;
+
+    color:#ffffff;
+
+}
+
+.rag-card h3{
+
+    color:#60a5fa;
+
+    margin-bottom:20px;
+
+}
+
+/* ===========================
+        INPUT
+=========================== */
+
+.rag-input{
+
+    width:100%;
+
+    padding:15px 18px;
+
+    margin:18px 0;
+
+    border-radius:12px;
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    background:
+        rgba(255,255,255,.08);
+
+    color:white;
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:.3s;
+
+}
+
+.rag-input::placeholder{
+
+    color:#cbd5e1;
+
+}
+
+.rag-input:focus{
+
+    border-color:#38bdf8;
+
+    box-shadow:
+        0 0 0 4px rgba(56,189,248,.18);
+
+}
+
+/* ===========================
+        TEXTAREA
+=========================== */
+
+.rag-textarea{
+
+    width:100%;
+
+    min-height:220px;
+
+    padding:18px;
+
+    border-radius:14px;
+
+    resize:vertical;
+
+    background:
+        rgba(255,255,255,.08);
+
+    color:white;
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    outline:none;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.rag-textarea::placeholder{
+
+    color:#cbd5e1;
+
+}
+
+.rag-textarea:focus{
+
+    border-color:#38bdf8;
+
+    box-shadow:
+        0 0 0 4px rgba(56,189,248,.18);
+
+}
+
+/* ===========================
+        BUTTON
+=========================== */
+
+.rag-btn{
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #2563eb,
+            #06b6d4
+        );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+
+}
+
+.rag-btn:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 15px 35px rgba(37,99,235,.45);
+
+}
+
+.rag-btn:disabled{
+
+    background:#6b7280;
+
+    cursor:not-allowed;
+
+}
+
+/* ===========================
+        RESULT
+=========================== */
+
+.rag-result{
+
+    margin-top:35px;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    border:
+        1px solid rgba(255,255,255,.15);
+
+    color:#f8fafc;
+
+    line-height:1.8;
+
+}
+
+.rag-result pre{
+
+    white-space:pre-wrap;
+
+    color:white;
+
+    font-size:15px;
+
+}
+
+/* ===========================
+        JOB CARD
+=========================== */
+
+.job-result-card{
+
+    margin-top:20px;
+
+    padding:24px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(79,70,229,.22),
+            rgba(37,99,235,.15)
+        );
+
+    border:
+        1px solid rgba(255,255,255,.12);
+
+    transition:.35s;
+
+}
+
+.job-result-card:hover{
+
+    transform:
+        translateY(-6px);
+
+    box-shadow:
+        0 18px 35px rgba(0,0,0,.30);
+
+}
+
+.job-result-card h4{
+
+    font-size:22px;
+
+    margin-bottom:12px;
+
+    color:white;
+
+}
+
+.job-result-card p{
+
+    color:#e5e7eb;
+
+    margin:10px 0;
+
+    line-height:1.7;
+
+}
+
+.job-result-card strong{
+
+    color:#60a5fa;
+
+}
+
+/* ===========================
+        LOADER
+=========================== */
+
+.loading{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-top:20px;
+
+}
+
+.loading span{
+
+    width:10px;
+
+    height:10px;
+
+    border-radius:50%;
+
+    background:#3b82f6;
+
+    animation:bounce 1s infinite;
+
+}
+
+.loading span:nth-child(2){
+
+    animation-delay:.2s;
+
+}
+
+.loading span:nth-child(3){
+
+    animation-delay:.4s;
+
+}
+
+@keyframes bounce{
+
+0%,100%{
+
+transform:translateY(0);
+
+}
+
+50%{
+
+transform:translateY(-7px);
+
+}
+
+}
+
+/* ===========================
+        FADE
+=========================== */
+
+.rag-card{
+
+animation:fadeUp .45s ease;
+
+}
+
+@keyframes fadeUp{
+
+from{
+
+opacity:0;
+
+transform:translateY(25px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+/* ===========================
+        MOBILE
+=========================== */
+
+@media(max-width:768px){
+
+.rag-card{
+
+padding:22px;
+
+width:95%;
+
+}
+
+.rag-card h2{
+
+font-size:24px;
+
+}
+
+.rag-btn{
+
+font-size:15px;
+
+padding:14px;
+
+}
+
+.job-result-card{
+
+padding:18px;
+
+}
+
+}

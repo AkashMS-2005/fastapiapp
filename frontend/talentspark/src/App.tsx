@@ -7,6 +7,12 @@ import Footer from "./components/Footer";
 import ChatButton from "./components/ChatButton";
 import ChatWindow from "./components/ChatWindow";
 
+// New AI Components
+import ResumeAnalysis from "./components/ResumeAnalysis";
+import SemanticSearch from "./components/SemanticSearch";
+import RagSearch from "./components/RagSearch";
+import JobMatch from "./components/JobMatch";
+
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 
@@ -27,6 +33,7 @@ import type { Company } from "./types/company";
 function App() {
 
     const [loading, setLoading] = useState(true);
+
     const [error, setError] = useState<Error | null>(null);
 
     const [companies, setCompanies] = useState<Company[]>([]);
@@ -39,7 +46,6 @@ function App() {
         "login" | "register" | "dashboard"
     >("login");
 
-    // Chat popup state
     const [chatOpen, setChatOpen] = useState(false);
 
     const fetchCompanies = async () => {
@@ -61,6 +67,7 @@ function App() {
             setLoading(false);
 
         }
+
     };
 
     const handleEdit = async (company: Company) => {
@@ -83,6 +90,7 @@ function App() {
             setError(err as Error);
 
         }
+
     };
 
     const handleDelete = async (id: number) => {
@@ -100,6 +108,7 @@ function App() {
             setError(err as Error);
 
         }
+
     };
 
     const handleAdd = async (company: Company) => {
@@ -118,6 +127,7 @@ function App() {
             setError(err as Error);
 
         }
+
     };
 
     const handleLogin = () => {
@@ -127,6 +137,7 @@ function App() {
         setCurrentPage("dashboard");
 
         fetchCompanies();
+
     };
 
     const handleLogout = () => {
@@ -138,6 +149,7 @@ function App() {
         setCurrentPage("login");
 
         setCompanies([]);
+
     };
 
     useEffect(() => {
@@ -170,6 +182,7 @@ function App() {
                     }
                 />
             );
+
         }
 
         return (
@@ -182,21 +195,30 @@ function App() {
                 }
             />
         );
+
     }
 
     if (loading) {
+
         return <div>Loading...</div>;
+
     }
 
     if (error) {
+
         return <div>Error: {error.message}</div>;
+
     }
 
     return (
+
         <>
+
             <NavBar onLogout={handleLogout} />
 
             <br />
+
+            {/* Company Management */}
 
             <CompanyCard
                 companies={companies}
@@ -205,22 +227,53 @@ function App() {
                 onadd={handleAdd}
             />
 
+            <br />
+
+            {/* Jobs */}
+
             <JobCard />
+
+            <br />
+
+            {/* Resume Analyzer */}
+
+            <ResumeAnalysis />
+
+            <br />
+
+            {/* Semantic Search */}
+
+            <SemanticSearch />
+
+            <br />
+
+            {/* AI Career Assistant */}
+
+            <RagSearch />
+
+            <br />
+
+            {/* AI Job Match */}
+
+            <JobMatch />
 
             <Footer />
 
-            {/* Chat Window */}
+            {/* Floating Chat */}
+
             <ChatWindow
                 open={chatOpen}
                 onClose={() => setChatOpen(false)}
             />
 
-            {/* Floating Button */}
             <ChatButton
                 onClick={() => setChatOpen(true)}
             />
+
         </>
+
     );
+
 }
 
 export default App;
