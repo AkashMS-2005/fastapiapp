@@ -9,6 +9,8 @@ import ChatPage from "./pages/ChatPage";
 import ResumeAnalyserPage from "./pages/ResumeAnalyserPage";
 import JobMatchingPage from "./pages/JobMatchingPage";
 import { isAuthenticated } from "./Services/AuthService";
+import CompaniesPage from "./pages/CompaniesPage";
+import JobsPage from "./pages/JobsPage";
 
 // Helper component to protect dashboard routes
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -104,6 +106,24 @@ function App() {
                     element={
                         <ProtectedRoute>
                             <JobMatchingPage />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/companies"
+                    element={
+                        <ProtectedRoute>
+                            <CompaniesPage />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/jobs"
+                    element={
+                        <ProtectedRoute>
+                            <JobsPage />
                         </ProtectedRoute>
                     }
                 />

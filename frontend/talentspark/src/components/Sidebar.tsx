@@ -4,7 +4,9 @@ import {
     Briefcase,
     FileText,
     Bot,
-    User
+    User,
+    Building2,
+    ClipboardList
 } from "lucide-react";
 import "../styles/sidebar.css";
 
@@ -19,6 +21,16 @@ function Sidebar() {
                 <NavLink to="/" end className={({ isActive }) => (isActive ? "active" : "")}>
                     <Home size={20} />
                     Dashboard
+                </NavLink>
+
+                <NavLink to="/companies" className={({ isActive }) => (isActive ? "active" : "")}>
+                    <Building2 size={20} />
+                    Companies
+                </NavLink>
+
+                <NavLink to="/jobs" className={({ isActive }) => (isActive ? "active" : "")}>
+                    <ClipboardList size={20} />
+                    Jobs
                 </NavLink>
 
                 <NavLink to="/job-matcher" className={({ isActive }) => (isActive ? "active" : "")}>

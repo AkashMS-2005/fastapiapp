@@ -58,7 +58,7 @@ function JobMatch() {
 
                     <h1>
 
-                        🎯 AI Job Matcher
+                        🎯  Job Matcher
 
                     </h1>
 

@@ -1,6 +1,10 @@
+# pyrefly: ignore [missing-import]
 from fastapi import FastAPI
+# pyrefly: ignore [missing-import]
 from fastapi.middleware.cors import CORSMiddleware
-
+# pyrefly: ignore [missing-import]
+from database import Base,engine    
+# pyrefly: ignore [missing-import]
 from routers import auth, company, job, chat,rag
 
 app = FastAPI(
@@ -8,6 +12,12 @@ app = FastAPI(
     version="1.0.0",
     description="TalentSpark Backend using FastAPI"
 )
+
+@app.on_event("startup")
+async def startup_event():
+    from database import engine
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
 
 # React Frontend URL
 origins = [

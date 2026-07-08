@@ -94,7 +94,7 @@ function JobCard() {
 
                             <div>
                                 <h4>₹ {job.salary}</h4>
-                                <span>Annual Package</span>
+                                <span>monthly Package</span>
                             </div>
 
                             <button className="apply-btn">
