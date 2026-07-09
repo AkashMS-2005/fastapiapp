@@ -1,3 +1,4 @@
+# pyrefly: ignore [missing-import]
 from fastapi import APIRouter, HTTPException
 
 from schemas.chat import ChatRequest, ChatResponse
