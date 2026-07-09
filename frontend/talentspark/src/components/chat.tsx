@@ -15,7 +15,7 @@ function Chat() {
             id: 1,
             sender: "bot",
             text:
-                "👋 Hello! I'm TalentSpark AI.\n\nI can help you:\n\n• Find Jobs\n• Analyse Resume\n• Career Guidance\n• Interview Questions\n• AI Search",
+                "👋 Hello! I'm Akash M S Spark.\n\nI can help you:\n\n• Find Jobs\n• Analyse Resume\n• Career Guidance\n• Interview Questions\n• AI Search",
             time: new Date().toLocaleTimeString([], {
                 hour: "2-digit",
                 minute: "2-digit",
@@ -136,7 +136,7 @@ function Chat() {
 
             <div className="chat-header">
 
-                <h3>🤖 TalentSpark AI</h3>
+                <h3>🤖 Akash M S Spark</h3>
 
                 <span>Online</span>
 
@@ -199,7 +199,7 @@ function Chat() {
 
                     value={input}
 
-                    placeholder="Ask TalentSpark AI..."
+                    placeholder="Ask Akash M S Spark..."
 
                     onChange={(e) => setInput(e.target.value)}
 

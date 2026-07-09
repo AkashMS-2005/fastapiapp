@@ -8,9 +8,9 @@ from database import Base,engine
 from routers import auth, company, job, chat,rag
 
 app = FastAPI(
-    title="TalentSpark API",
+    title="Akash M S Spark API",
     version="1.0.0",
-    description="TalentSpark Backend using FastAPI"
+    description="Akash M S Spark Backend using FastAPI"
 )
 
 @app.on_event("startup")
@@ -44,7 +44,7 @@ app.include_router(rag.router)
 @app.get("/")
 def root():
     return {
-        "message": "TalentSpark Backend Running Successfully"
+        "message": "Akash M S Spark Backend Running Successfully"
     }
 
 # Health Check Endpoint

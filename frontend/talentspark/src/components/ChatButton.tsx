@@ -12,7 +12,7 @@ function ChatButton({ onClick }: Props) {
 
             className="chat-floating-btn"
 
-            title="Open TalentSpark AI"
+            title="Open Akash M S Spark"
 
         >
 

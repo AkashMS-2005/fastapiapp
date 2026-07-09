@@ -17,7 +17,7 @@ function NavBar() {
 
                 <div className="logo-info">
 
-                    <h2>TalentSpark</h2>
+                    <h2>Akash M S Spark</h2>
 
                     <span>AI Powered Career Platform</span>
 

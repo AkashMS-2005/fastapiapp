@@ -6,6 +6,7 @@ from sqlalchemy.future import select
 
 from schemas.job import JobCreate, JobUpdate, JobResponse
 from models.job import Job
+from models.company import Company
 from database import get_db
 from utils.oauth2 import role_required, get_current_user
 
@@ -21,6 +22,8 @@ async def create_job(job: JobCreate, db: AsyncSession = Depends(get_db), current
         await db.refresh(db_job)
         return db_job
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
@@ -31,6 +34,8 @@ async def get_all_job(db: AsyncSession = Depends(get_db), current_user=Depends(g
         jobs = await db.execute(select(Job))
         return jobs.scalars().all()
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
@@ -49,6 +54,8 @@ async def get_job(job_id: int, db: AsyncSession = Depends(get_db), current_user=
 
         return job
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
@@ -72,6 +79,8 @@ async def update_job(job_id: int, job: JobUpdate, db: AsyncSession = Depends(get
 
         return db_job
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))
 
@@ -93,5 +102,7 @@ async def delete_job(job_id: int, db: AsyncSession = Depends(get_db), current_us
 
         return {"detail": "Job deleted successfully."}
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         await db.rollback()
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e))

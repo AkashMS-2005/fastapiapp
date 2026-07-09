@@ -69,7 +69,7 @@ function JobCard() {
 
                             <div>
                                 <h3>{job.title}</h3>
-                                <span>TalentSpark</span>
+                                <span>Akash M S Spark</span>
                             </div>
 
                         </div>

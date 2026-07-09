@@ -28,7 +28,7 @@ function Welcome() {
 
                         <p>
 
-                            TalentSpark helps students and professionals
+                            Akash M S Spark helps students and professionals
                             discover jobs, analyse resumes, perform semantic
                             search and chat with an AI career assistant.
 

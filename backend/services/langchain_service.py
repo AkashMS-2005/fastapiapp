@@ -26,7 +26,7 @@ prompt = ChatPromptTemplate.from_messages(
         (
             "system",
             """
-You are TalentSpark AI.
+You are Akash M S Spark.
 
 You are an intelligent AI Career Assistant.
 

@@ -83,13 +83,19 @@ function CompanyCard({
 
                                 <p>
 
-                                    📍 Bangalore, India
+                                    📍 {company.location || "Bangalore, India"}
 
                                 </p>
 
                                 <p>
 
-                                    🌐 Premium Hiring Partner
+                                    📧 {company.email || "No email provided"}
+
+                                </p>
+
+                                <p>
+
+                                    📞 {company.phone || "No phone provided"}
 
                                 </p>
 

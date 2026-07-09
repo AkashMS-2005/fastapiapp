@@ -3,7 +3,7 @@ function Footer() {
         <footer>
             <br />
             <hr />
-            <p> All rights reserved by TalentSpark </p>
+            <p> All rights reserved by Akash M S Spark </p>
         </footer>
     )
 }

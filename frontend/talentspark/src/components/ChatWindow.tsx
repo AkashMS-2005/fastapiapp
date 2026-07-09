@@ -136,7 +136,7 @@ function ChatWindow({ open, onClose }: Props) {
 
                         >
 
-                            🤖 TalentSpark AI
+                            🤖 Akash M S Spark
 
                         </div>
 

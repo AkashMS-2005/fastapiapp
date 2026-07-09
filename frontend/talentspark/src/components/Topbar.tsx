@@ -32,12 +32,12 @@ function Topbar() {
 
                 <div className="profile">
                     <img
-                        src="https://ui-avatars.com/api/?name=TalentSpark+User&background=3b82f6&color=fff"
+                        src="https://ui-avatars.com/api/?name=Akash+M+S+Spark+User&background=3b82f6&color=fff"
                         alt="profile"
                     />
                     <div>
                         <strong>Welcome</strong>
-                        <small>TalentSpark User</small>
+                        <small>Akash M S Spark User</small>
                     </div>
                 </div>
             </div>

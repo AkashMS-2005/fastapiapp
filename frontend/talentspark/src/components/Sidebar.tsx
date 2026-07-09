@@ -14,7 +14,7 @@ function Sidebar() {
     return (
         <aside className="sidebar">
             <div className="logo" style={{ cursor: "default" }}>
-                🚀 TalentSpark
+                🚀 Akash M S Spark
             </div>
 
             <nav>

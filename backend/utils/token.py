@@ -2,6 +2,7 @@ from datetime import datetime, timedelta, timezone
 import os
 
 from dotenv import load_dotenv
+# pyrefly: ignore [missing-import]
 from fastapi import HTTPException, status
 from jose import JWTError, ExpiredSignatureError, jwt
 from sqlalchemy.orm import Session
@@ -42,10 +43,10 @@ def create_access_token(
 
 def verify_access_token(
     token: str,
-    db: Session
-) -> User:
+    db: Session = None
+) -> dict:
     """
-    Verify JWT token and return the authenticated user.
+    Verify JWT token and return the payload.
     """
 
     try:
@@ -72,19 +73,7 @@ def verify_access_token(
                 detail="Invalid authentication credentials."
             )
 
-        current_user = (
-            db.query(User)
-            .filter(User.id == user_id)
-            .first()
-        )
-
-        if current_user is None:
-            raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="User not found."
-            )
-
-        return current_user
+        return payload
 
     except ExpiredSignatureError:
         raise HTTPException(

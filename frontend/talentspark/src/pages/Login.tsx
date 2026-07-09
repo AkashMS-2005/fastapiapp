@@ -44,7 +44,7 @@ function Login({ onLoginSuccess }: Props) {
         <div className="auth-wrapper">
             <div className="auth-card">
                 <div className="auth-header">
-                    <div className="auth-logo">🚀 TalentSpark</div>
+                    <div className="auth-logo">🚀 Akash M S Spark</div>
                     <h2>Welcome Back</h2>
                     <p>Enter your credentials to access your career dashboard</p>
                 </div>
