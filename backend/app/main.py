@@ -22,7 +22,12 @@ async def startup_event():
 # React Frontend URL
 origins = [
     "http://localhost:5173",
+    "https://fastapiapp-iota.vercel.app",
 ]
+import os
+frontend_url = os.getenv("FRONTEND_URL")
+if frontend_url:
+    origins.append(frontend_url)
 
 # CORS Configuration
 app.add_middleware(
